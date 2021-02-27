@@ -8,8 +8,8 @@ import pickle
 
 # Import Data
 dataFile = os.path.join(
-    os.environ["PWD"],
-    "data",
+    "/mnt/data",
+    "churn-data",
     "smallPrepared.csv"
 )
 
@@ -30,7 +30,7 @@ gb1prb = gb1.predict_proba(X)
 # Save model as Python Pickle file
 
 modelSaveFile = os.path.join(
-    os.environ["PWD"],
+    "/mnt/artifacts",
     "results",
     "gb1.pkl"
 )
