@@ -1,5 +1,7 @@
 import os
 import boto3
+import json
+import requests
 
 class DominoExport():
     def __init__(
@@ -58,9 +60,40 @@ class DominoExport():
 
         return response
 
+    # Domino API Wrapper for /v4/models/<MODEL_ID>/<MODEL_VERSION_ID>/exportImageToRegistry
+    # This API request exports a Domino model to ECR
+    def domino_ecr_export(self, ecr_region, ecr_repository, modelID, modelVersion):
+        modelVersionID = next(iter([modelVersionInfo.get("_id", None) for modelVersionInfo in self.domino_model_versions(modelID) if modelVersionInfo.get("metadata", {}).get("number", None) == modelVersion]), None)
+        exportStatus = None
+
+        if modelVersionID:
+            urlPath = "/v4/models/{MODEL_ID}/{MODEL_VERSION_ID}/exportImageToRegistry".format(
+                MODEL_ID = modelID,
+                MODEL_VERSION_ID = modelVersionID
+            )
+
+            exportTag = "domino-{USERNAME}-{PROJECT_NAME}-{MODEL_ID}-{MODEL_VERSION}".format(
+                USERNAME = self.domino_user_name,
+                PROJECT_NAME = self.domino_project_name,
+                MODEL_ID = modelID,
+                MODEL_VERSION = modelVersion
+            )
+
+            jsonData = self.generate_ecr_push_details(ecr_region, ecr_repository, exportTag)
+
+            exportStatus = json.loads(self.domino_request(urlPath, "POST", jsonData).text)
+            exportStatus["tag"] = exportTag
+            exportStatus["url"] = "https://{REGISTRY_URL}/{REPOSITORY}:{TAG}".format(
+                REGISTRY_URL = jsonData["registryUrl"],
+                REPOSITORY = jsonData["repository"],
+                TAG = jsonData["tag"]
+            )
+
+        return exportStatus
+    
     # Domino API Wrapper for /v4/models/<MODEL_ID>/<MODEL_VERSION_ID>/exportImageForSagemaker
     # This API request exports a Domino model to ECR as a SageMaker compatible format
-    def domino_sagemaker_export(self, ecr_repository, modelID, modelVersion):
+    def domino_sagemaker_export(self, ecr_region, ecr_repository, modelID, modelVersion):
         modelVersionID = next(iter([modelVersionInfo.get("_id", None) for modelVersionInfo in self.domino_model_versions(modelID) if modelVersionInfo.get("metadata", {}).get("number", None) == modelVersion]), None)
         exportStatus = None
 
@@ -77,7 +110,7 @@ class DominoExport():
                 MODEL_VERSION = modelVersion
             )
 
-            jsonData = self.generate_ecr_push_details(ecr_repository, exportTag)
+            jsonData = self.generate_ecr_push_details(ecr_region, ecr_repository, exportTag)
 
             exportStatus = json.loads(self.domino_request(urlPath, "POST", jsonData).text)
             exportStatus["tag"] = exportTag
