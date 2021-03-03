@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export DOMINO_API_HOST="https://demo.dominodatalab.com"
 export DOMINO_USER_API_KEY="50266f49641af73f99a174c4d66e002560bda79b227216c8262795bd48942fc1"
 export DOMINO_PROJECT_NAME="ModelExportPipeline"
@@ -56,7 +58,7 @@ domino_job_run "deploy_model.sh $PROJECT_ID $MODEL_ID $MODEL_FILE $MODEL_FUNCTIO
 
 # Step 3: Test Model API Endpoint to validate results
 echo "Testing Domino Model API Endpoint..."
-domino_job_run "test_model.sh" "[Lifecycle.sh] Test Model"
+domino_job_run "test_model.sh $MODEL_ID" "[Lifecycle.sh] Test Model"
 
 # Step 4: Publish model to ECR
 echo "Pushing model API endpoint to AWS Elastic Container Registry..."
