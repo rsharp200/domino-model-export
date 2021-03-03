@@ -65,4 +65,4 @@ domino_job_run "export_model.sh"
 
 # Step 5: Run model on production server
 echo "Running model on production EC2 server..."
-bash production.sh
+#bash production.sh
