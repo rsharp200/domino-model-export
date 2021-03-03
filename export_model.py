@@ -1,9 +1,10 @@
 from time import sleep
 import pprint
 from domino_export import DominoExport
+from os import getenv
 
 # Set up Domino Export API
-domino_model_id = "603a943ecc42014cc2ddda51"
+domino_model_id = getenv("MODEL_ID")
 domino_export = DominoExport()
 
 # AWS ECR Configuration
@@ -22,6 +23,7 @@ model_export = domino_export.domino_ecr_export(ecr_region, ecr_repository, domin
 # How often, in seconds, to check the status of the model export
 SLEEP_TIME_SECONDS = 10
 
+status = None
 while model_export:
     status = domino_export.domino_model_export_status(model_export["exportId"]).get("status", None)
     if status:
@@ -30,7 +32,10 @@ while model_export:
         if status not in ["complete", "failed"]:
             sleep(SLEEP_TIME_SECONDS)
         else:
-            break
+            break            
 
 logs = domino_export.domino_model_export_logs(model_export["exportId"])
 pprint.pprint(logs)
+
+if status != "complete":
+    raise SystemExit("Domino model export failed. Please see logs.")
