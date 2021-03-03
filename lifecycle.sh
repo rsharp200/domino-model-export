@@ -27,7 +27,6 @@ function domino_job_run {
     echo "Running on Domino (${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}): $1"
     PAYLOAD="{\"command\": $COMMAND, \"title\": \"${2}\", \"isDirect\": false}"
     RESPONSE=$(curl ${DOMINO_API_HOST}/v1/projects/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/runs -s -H "X-Domino-Api-Key: ${DOMINO_USER_API_KEY}" -H 'Content-Type: application/json' -d "${PAYLOAD}")
-    echo $RESPONSE
     DOMINO_RUN_ID=$(echo "$RESPONSE" | jq -r '.runId')
 
     echo "Run $DOMINO_RUN_ID has started. Waiting for the run to complete."
