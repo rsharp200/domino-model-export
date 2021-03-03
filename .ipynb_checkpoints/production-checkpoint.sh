@@ -10,3 +10,7 @@ aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_R
 
 # Pull Docker Image
 docker pull 573040241134.dkr.ecr.us-west-2.amazonaws.com/domino-model-exports:domino-igor_marchenko-ModelExportPipeline-603a943ecc42014cc2ddda51-2
+
+# Run Docker Image
+DOCKER_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep ModelExportPipeline | sort | head -n 1)
+docker run -p 8888:8080 -d -t $DOCKER_IMAGE
