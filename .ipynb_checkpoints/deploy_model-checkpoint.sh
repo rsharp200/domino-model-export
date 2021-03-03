@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 PROJECT_ID=$1
 MODEL_ID=$2
 MODEL_FILE=$3
@@ -7,7 +9,7 @@ MODEL_FUNCTION=$4
 
 function domino_model_status {
     RESPONSE=$(curl "${DOMINO_API_HOST}/models/${MODEL_ID}/versions/json?pageNumber=1&pageSize=100" -s -H "X-Domino-Api-Key: ${DOMINO_USER_API_KEY}")
-    MODEL_VERSION_STATUS=$(echo "$RESPONSE" | jq ".results[] | select(.number==${MODEL_VERSION_NUMBER}) | .deploymentStatus.name"
+    MODEL_VERSION_STATUS=$(echo "$RESPONSE" | jq -r ".results[] | select(.number==${MODEL_VERSION_NUMBER}) | .deploymentStatus.name")
 }
 
 echo "Publishing model..."
