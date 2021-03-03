@@ -22,12 +22,12 @@ function domino_job_status {
 function domino_job_run {
     DOMINO_RUN_ID=0
     DOMINO_RUN_STATUS=""
-
+    COMMAND=$(echo "[\"$(echo "${1}" | sed 's/ /", "/g')\"]")
 
     echo "Running on Domino (${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}): $1"
-    PAYLOAD="{\"command\": [\"${1}\"], \"title\": \"Automated retraining\", \"isDirect\": false}"
+    PAYLOAD="{\"command\": $COMMAND, \"title\": \"${2}\", \"isDirect\": true}"
     RESPONSE=$(curl ${DOMINO_API_HOST}/v1/projects/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/runs -s -H "X-Domino-Api-Key: ${DOMINO_USER_API_KEY}" -H 'Content-Type: application/json' -d "${PAYLOAD}")
-
+    echo $RESPONSE
     DOMINO_RUN_ID=$(echo "$RESPONSE" | jq -r '.runId')
 
     echo "Run $DOMINO_RUN_ID has started. Waiting for the run to complete."
@@ -49,19 +49,19 @@ function domino_job_run {
 
 # Step 1: Retrain model
 echo "Retraining model..."
-domino_job_run "train_model.py"
+domino_job_run "train_model.py" "[Lifecycle.sh] Retraining Model"
 
 # Step 2: Deploy Model as Domino Model API
 echo "Deploying model as a Domino Model API..."
-domino_job_run "deploy_model.sh"
+domino_job_run "deploy_model.sh $PROJECT_ID $MODEL_ID $MODEL_FILE $MODEL_FUNCTION" "[Lifecycle.sh] Deploying Model to Domino"
 
 # Step 3: Test Model API Endpoint to validate results
 echo "Testing Domino Model API Endpoint..."
-domino_job_run "test_model.sh"
+domino_job_run "test_model.sh" "[Lifecycle.sh] Test Model"
 
 # Step 4: Publish model to ECR
 echo "Pushing model API endpoint to AWS Elastic Container Registry..."
-domino_job_run "export_model.sh"
+domino_job_run "export_model.sh" "[Lifecycle.sh] Publish Model to ECR"
 
 # Step 5: Run model on production server
 echo "Running model on production EC2 server..."
