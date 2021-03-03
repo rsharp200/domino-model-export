@@ -61,7 +61,7 @@ domino_job_run "test_model.sh" "[Lifecycle.sh] Test Model"
 
 # Step 4: Publish model to ECR
 echo "Pushing model API endpoint to AWS Elastic Container Registry..."
-domino_job_run "export_model.sh" "[Lifecycle.sh] Publish Model to ECR"
+domino_job_run "export_model.sh $MODEL_ID" "[Lifecycle.sh] Publish Model to ECR"
 
 # Step 5: Run model on production server
 echo "Running model on production EC2 server..."
