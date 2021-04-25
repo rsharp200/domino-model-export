@@ -7,7 +7,7 @@ export DOMINO_USER_API_KEY="XYZ"
 export DOMINO_PROJECT_NAME="ModelExportPipeline"
 export DOMINO_PROJECT_OWNER="ross_sharp"
 
-export PROJECT_ID="603a6f5a5269971ee08c1e2a"
+export PROJECT_ID="6085dbc1bf0598551929d811"
 export MODEL_ID="6085df93bf0598551929d829"
 export MODEL_FILE="predict.py"
 export MODEL_FUNCTION="predict"
