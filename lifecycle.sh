@@ -5,10 +5,10 @@ set -e
 export DOMINO_API_HOST="https://test.com"
 export DOMINO_USER_API_KEY="XYZ"
 export DOMINO_PROJECT_NAME="ModelExportPipeline"
-export DOMINO_PROJECT_OWNER="igor_marchenko"
+export DOMINO_PROJECT_OWNER="ross_sharp"
 
-export PROJECT_ID="603a915f5269971ee08c1e40"
-export MODEL_ID="603a943ecc42014cc2ddda51"
+export PROJECT_ID="603a6f5a5269971ee08c1e2a"
+export MODEL_ID="6085df93bf0598551929d829"
 export MODEL_FILE="predict.py"
 export MODEL_FUNCTION="predict"
 
