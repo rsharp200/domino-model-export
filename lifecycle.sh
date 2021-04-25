@@ -2,8 +2,8 @@
 
 set -e
 
-export DOMINO_API_HOST="https://test.com"
-export DOMINO_USER_API_KEY="XYZ"
+export DOMINO_API_HOST="https://demo.dominodatalab.com"
+export DOMINO_USER_API_KEY="7281a8474f024395ecdf8949c2d7ca23d6cbb5438a6cf87e261c44d531de3ac8"
 export DOMINO_PROJECT_NAME="ModelExportPipeline"
 export DOMINO_PROJECT_OWNER="ross_sharp"
 
