@@ -3,7 +3,7 @@
 set -e
 
 DOMINO_HOST="https://demo.dominodatalab.com"
-AUTH_CREDENTIALS="uYZUb5q10eNfLmnXepFdW1MscL9kKTX5wK5bf2vrnhw9xjMql236UNnMBBa1CcLO:uYZUb5q10eNfLmnXepFdW1MscL9kKTX5wK5bf2vrnhw9xjMql236UNnMBBa1CcLO"
+AUTH_CREDENTIALS="qpo02njUOaIvOASFvmdIlv7rPiBrxRH6V6iBV1EokIocPtb8wod11V20wmTHWMTh:qpo02njUOaIvOASFvmdIlv7rPiBrxRH6V6iBV1EokIocPtb8wod11V20wmTHWMTh"
 
 MODEL_ID=$1
 
