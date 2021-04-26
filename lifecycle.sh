@@ -2,15 +2,15 @@
 
 set -e
 
-export DOMINO_API_HOST="https://demo.dominodatalab.com"
-export DOMINO_USER_API_KEY="7281a8474f024395ecdf8949c2d7ca23d6cbb5438a6cf87e261c44d531de3ac8"
-export DOMINO_PROJECT_NAME="ModelExportPipeline"
-export DOMINO_PROJECT_OWNER="ross_sharp"
+export DOMINO_API_HOST="<Set to your Domino URL>"
+export DOMINO_USER_API_KEY="<Set to your user API key>"
+export DOMINO_PROJECT_NAME="<Set to your Project name>"
+export DOMINO_PROJECT_OWNER="<Set to Domino username>"
 
-export PROJECT_ID="6085dbc1bf0598551929d811"
-export MODEL_ID="6085df93bf0598551929d829"
-export MODEL_FILE="predict.py"
-export MODEL_FUNCTION="predict"
+export PROJECT_ID="<Set to your project's ID>"
+export MODEL_ID="<Set to your model API ID>" #This is as we are publishing a new version of an already existing model API
+export MODEL_FILE="<Set to the file which contains the model code>"
+export MODEL_FUNCTION="<Set to the function you want the API to invoke>"
 
 # Checkis if the Domino job is running
 # Expects RUN_ID argument
