@@ -2,20 +2,19 @@
 
 set -e
 
-export DOMINO_API_HOST="<Set to your Domino URL>"
-export DOMINO_USER_API_KEY="<Set to your user API key>"
-export DOMINO_PROJECT_NAME="<Set to your Project name>"
-export DOMINO_PROJECT_OWNER="<Set to Domino username>"
+export DOMINO_API_HOST="https://demo2.dominodatalab.com"
+export DOMINO_PROJECT_NAME="ModelExportPipeline"
+export DOMINO_PROJECT_OWNER="ross_sharp"
 
 export PROJECT_ID="<Set to your project's ID>"
-export MODEL_ID="<Set to your model API ID>" #This is as we are publishing a new version of an already existing model API
-export MODEL_FILE="<Set to the file which contains the model code>"
-export MODEL_FUNCTION="<Set to the function you want the API to invoke>"
+export MODEL_ID="631fb4e3de659c33feb8eedd" #This is as we are publishing a new version of an already existing model API
+export MODEL_FILE="/mnt/code/predict.py"
+export MODEL_FUNCTION="predict"
 
 # Checkis if the Domino job is running
 # Expects RUN_ID argument
 function domino_job_status {
-    RESPONSE=$(curl ${DOMINO_API_HOST}/v1/projects/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/runs/${1} -s -H "X-Domino-Api-Key: ${DOMINO_USER_API_KEY}")
+    RESPONSE=$(curl ${DOMINO_API_HOST}/v1/projects/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/runs/${1} -s -H "X-Domino-Api-Key: ${DOMINO_API_USER_KEY}")
     DOMINO_RUN_STATUS=$(echo "$RESPONSE" | jq -r '.status')
 }
 
@@ -50,7 +49,7 @@ function domino_job_run {
 
 # Step 1: Retrain model
 echo "Retraining model..."
-domino_job_run "train_model.py" "[Lifecycle.sh] Retraining Model"
+domino_job_run "/mnt/code/train_model.py" "[Lifecycle.sh] Retraining Model"
 
 # Step 2: Deploy Model as Domino Model API
 echo "Deploying model as a Domino Model API..."
