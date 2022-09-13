@@ -2,11 +2,6 @@
 
 set -e
 
-export DOMINO_API_HOST="https://demo2.dominodatalab.com"
-export DOMINO_PROJECT_NAME="ModelExportPipeline"
-export DOMINO_PROJECT_OWNER="ross_sharp"
-
-export PROJECT_ID="<Set to your project's ID>"
 export MODEL_ID="631fb4e3de659c33feb8eedd" #This is as we are publishing a new version of an already existing model API
 export MODEL_FILE="/mnt/code/predict.py"
 export MODEL_FUNCTION="predict"
@@ -53,7 +48,7 @@ domino_job_run "/mnt/code/train_model.py" "[Lifecycle.sh] Retraining Model"
 
 # Step 2: Deploy Model as Domino Model API
 echo "Deploying model as a Domino Model API..."
-domino_job_run "deploy_model.sh $PROJECT_ID $MODEL_ID $MODEL_FILE $MODEL_FUNCTION" "[Lifecycle.sh] Deploying Model to Domino"
+domino_job_run "deploy_model.sh $DOMINO_PROJECT_ID $MODEL_ID $MODEL_FILE $MODEL_FUNCTION" "[Lifecycle.sh] Deploying Model to Domino"
 
 # Step 3: Test Model API Endpoint to validate results
 echo "Testing Domino Model API Endpoint..."
