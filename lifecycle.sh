@@ -44,11 +44,11 @@ function domino_job_run {
 
 # Step 1: Retrain model
 echo "Retraining model..."
-domino_job_run "/mnt/code/train_model.py" "[Lifecycle.sh] Retraining Model"
+domino_job_run "train_model.py" "[Lifecycle.sh] Retraining Model"
 
 # Step 2: Deploy Model as Domino Model API
 echo "Deploying model as a Domino Model API..."
-domino_job_run "/mnt/code/deploy_model.sh $DOMINO_PROJECT_ID $MODEL_ID $MODEL_FILE $MODEL_FUNCTION" "[Lifecycle.sh] Deploying Model to Domino"
+domino_job_run "deploy_model.sh $DOMINO_PROJECT_ID $MODEL_ID $MODEL_FILE $MODEL_FUNCTION" "[Lifecycle.sh] Deploying Model to Domino"
 
 # Step 3: Test Model API Endpoint to validate results
 echo "Testing Domino Model API Endpoint..."
