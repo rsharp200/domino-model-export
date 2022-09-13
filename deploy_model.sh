@@ -2,9 +2,9 @@
 
 set -e
 
-MODEL_ID="6320c021de659c33feb8efe5"
-MODEL_FILE="/mnt/code/predict.py"
-MODEL_FUNCTION="predict"
+MODEL_ID=$2
+MODEL_FILE=$3
+MODEL_FUNCTION=$4
 
 function domino_model_status {
     RESPONSE=$(curl "${DOMINO_API_HOST}/models/${MODEL_ID}/versions/json?pageNumber=1&pageSize=100" -s -H "X-Domino-Api-Key: ${DOMINO_USER_API_KEY}")
