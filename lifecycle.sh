@@ -9,8 +9,10 @@ export MODEL_FUNCTION="predict"
 # Checkis if the Domino job is running
 # Expects RUN_ID argument
 function domino_job_status {
-    RESPONSE=$(curl ${DOMINO_API_HOST}/v1/projects/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/runs/${1} -s -H "X-Domino-Api-Key: ${DOMINO_API_USER_KEY}")
-    DOMINO_RUN_STATUS=$(echo "$RESPONSE" | jq -r '.status')
+    RESPONSE=$(curl ${DOMINO_API_HOST}/v1/projects/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/runs/${1} -s -H "X-Domino-Api-Key: ${DOMINO_API_USER_KEY}") #THIS IS BREAKIGN THE PIPELINE. THIS FUNCTION IS NOT GETTING EITHER SUCCEEDED OR FAILED, WHY??
+    echo "goodbye" ${RESPONSE}
+    DOMINO_RUN_STATUS=$(echo "$RESPONSE" | jq -r '.status') 
+    echo "hello" ${DOMINO_RUN_STATUS}
 }
 
 # Runs a Domino batch job using an API call and waits for the job to finish
