@@ -2,7 +2,7 @@
 
 set -e
 
-export MODEL_ID="631fb4e3de659c33feb8eedd" #This is as we are publishing a new version of an already existing model API
+export MODEL_ID="6320c021de659c33feb8efe5" #This is as we are publishing a new version of an already existing model API
 export MODEL_FILE="/mnt/code/predict.py"
 export MODEL_FUNCTION="predict"
 
