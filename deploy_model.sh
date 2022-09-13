@@ -2,10 +2,9 @@
 
 set -e
 
-PROJECT_ID=$1
-MODEL_ID=$2
-MODEL_FILE=$3
-MODEL_FUNCTION=$4
+MODEL_ID="6320c021de659c33feb8efe5"
+MODEL_FILE="/mnt/code/predict.py"
+MODEL_FUNCTION="predict"
 
 function domino_model_status {
     RESPONSE=$(curl "${DOMINO_API_HOST}/models/${MODEL_ID}/versions/json?pageNumber=1&pageSize=100" -s -H "X-Domino-Api-Key: ${DOMINO_USER_API_KEY}")
@@ -13,7 +12,7 @@ function domino_model_status {
 }
 
 echo "Publishing model..."
-PAYLOAD="{\"projectId\": \"${PROJECT_ID}\", \"file\": \"${MODEL_FILE}\", \"function\": \"${MODEL_FUNCTION}\"}"
+PAYLOAD="{\"projectId\": \"$DOMINO_PROJECT_ID\", \"file\": \"${MODEL_FILE}\", \"function\": \"${MODEL_FUNCTION}\"}"
 
 RESPONSE=$(curl ${DOMINO_API_HOST}/v1/models/${MODEL_ID}/versions -s -H "X-Domino-Api-Key: ${DOMINO_USER_API_KEY}" -H 'Content-Type: application/json' -d "${PAYLOAD}")
 
