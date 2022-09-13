@@ -2,7 +2,7 @@
 
 set -e
 
-MODEL_ID=$1
+MODEL_ID="6320c021de659c33feb8efe5"
 
 TEST=$(curl ${DOMINO_API_HOST}/models/${MODEL_ID}/latest/model -s -H 'Content-Type: application/json' -d '{ "data": { "dropperc": 1000, "mins": 941, "consecmonths": 29, "income": 35000 } }' -u $DOMINO_API_USER_KEY | grep "request_id" | wc -l)
 
